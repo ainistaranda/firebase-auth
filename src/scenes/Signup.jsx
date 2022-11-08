@@ -24,7 +24,7 @@ export default function Signup({ setUser }) {
     }
   return (
     <>
-      <h1>Login</h1>
+      <h1>Signup</h1>
       <form onSubmit={handleSignup} >
         <label htmlFor="email">
           Email:
@@ -38,7 +38,7 @@ export default function Signup({ setUser }) {
           value={password} onChange={e => setPassword(e.target.value)}/>
         </label>
         <br />
-        <button type="submit">Login</button>
+        <button type="submit">Signup</button>
       </form>
     </>
   );
