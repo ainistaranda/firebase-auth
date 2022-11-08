@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { initializeApp } from 'firebase/app'
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, 
-  signInWithPopup } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const firebaseConfig = {
     apiKey: "AIzaSyBtYAPftjR_ewTWWj5jRkYApjdkXrrRbfY",
@@ -12,30 +11,21 @@ const firebaseConfig = {
     appId: "1:403338510047:web:9afd5699af836f0a34736a"
   };
 
-export default function Login({ setUser }) {
+export default function Signup({ setUser }) {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
-    const handleLogin = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault()
         const app = initializeApp(firebaseConfig) // connects to firebase
         const auth = getAuth(app) // connects us to firebase auth
-        const response = await signInWithEmailAndPassword(auth, email, password)
+        const response = await createUserWithEmailAndPassword(auth, email, password)
             .catch(alert)
         setUser(response.user)
     }
-    const handleGoogleLogin = async () => {
-      const app = initializeApp(firebaseConfig) // connects to firebase
-      const auth = getAuth(app) // connects us to firebase auth
-      const provider = new GoogleAuthProvider()
-      const response = await signInWithPopup(auth, provider)
-        .catch(alert)
-      setUser(response.user)
-    }
-    
   return (
     <>
       <h1>Login</h1>
-      <form onSubmit={handleLogin} >
+      <form onSubmit={handleSignup} >
         <label htmlFor="email">
           Email:
           <input type="email" name="email" placeholder="yourname@domain.com"
@@ -50,8 +40,6 @@ export default function Login({ setUser }) {
         <br />
         <button type="submit">Login</button>
       </form>
-      <br />
-      <button onClick={handleGoogleLogin}>Sign in with Google</button>
     </>
   );
 }
